@@ -1,0 +1,32 @@
+{
+  "name": "news-explorer-api",
+  "version": "0.0.1",
+  "description": "Thesis Yandex.Praktikum",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanyamaks/news-explorer-api.git"
+  },
+  "author": "Aleksandr Maksimov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanyamaks/news-explorer-api/issues"
+  },
+  "homepage": "https://github.com/sanyamaks/news-explorer-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.9.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.4",
+    "prettier": "2.1.2"
+  }
+}
