@@ -11,6 +11,7 @@ module.exports = {
   },
   rules: {
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
-    'object-curly-newline': 0,
+    'object-curly-newline': 'off',
   },
+  parser: 'babel-eslint',
 };

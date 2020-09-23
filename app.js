@@ -7,6 +7,9 @@ const apiSignUpRouter = require('./routes/apiSignUpRouter');
 const apiSignInRouter = require('./routes/apiSignInRouter');
 const apiUsersRouter = require('./routes/apiUsersRouter');
 const apiArticlesRouter = require('./routes/apiArticlesRouter');
+const errorHandler = require('./middlewares/errorHandler');
+const errorController = require('./middlewares/errorController');
+const { DocumentNotFoundError } = require('./errors/DocumentNotFoundError');
 
 const { PORT = 3000 } = process.env;
 
@@ -31,6 +34,12 @@ app.use('/', apiSignUpRouter);
 app.use('/', apiSignInRouter);
 app.use('/', apiUsersRouter);
 app.use('/', apiArticlesRouter);
+app.use(() => {
+  throw new DocumentNotFoundError('Запрашиваемый ресурс не найден');
+});
+
+app.use(errorHandler);
+app.use(errorController);
 
 app.listen(PORT, () => {
   console.log(PORT);
