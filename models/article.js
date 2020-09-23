@@ -5,31 +5,31 @@ const { Schema } = mongoose;
 const articleSchema = new Schema({
   keyword: {
     type: String,
-    require: true,
+    required: true,
   },
   title: {
     type: String,
-    require: true,
+    required: true,
   },
   text: {
     type: String,
-    require: true,
+    required: true,
   },
   date: {
     type: String,
-    require: true,
+    required: true,
   },
   source: {
     type: String,
-    require: true,
+    required: true,
   },
   link: {
     type: String,
-    require: true,
+    required: true,
   },
   image: {
     type: String,
-    require: true,
+    required: true,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
