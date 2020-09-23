@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const mongooseUniqueValidator = require('mongoose-unique-validator');
 
 const { Schema } = mongoose;
 
@@ -13,10 +14,12 @@ const userSchema = new Schema({
       },
       message: 'Email не валидн',
     },
+    unique: true,
   },
   password: {
     type: String,
     required: [true, 'Это обязательное поле'],
+    select: false,
   },
   name: {
     type: String,
@@ -26,5 +29,8 @@ const userSchema = new Schema({
   },
 });
 
+userSchema.plugin(mongooseUniqueValidator, {
+  message: 'Пользователь с таким Email уже существует',
+});
 const UserModel = mongoose.model('user', userSchema);
 module.exports = UserModel;

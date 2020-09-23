@@ -4,7 +4,7 @@ const { UnauthorizedError } = require('../errors/UnauthorizedError');
 
 module.exports.signin = (req, res, next) => {
   const { email, password } = req.body;
-  UserModel.findOne({ email })
+  UserModel.findOne({ email }).select('+password')
     .then((potencialUser) => {
       if (!potencialUser) {
         return Promise.reject(
