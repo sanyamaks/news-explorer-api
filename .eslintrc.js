@@ -23,6 +23,7 @@ module.exports = {
         functions: 'ignore',
       },
     ],
+    'operator-linebreak': [2, 'after'],
   },
   parser: 'babel-eslint',
 };
