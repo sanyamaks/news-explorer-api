@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const { Schema } = mongoose;
 
@@ -26,10 +27,22 @@ const articleSchema = new Schema({
   link: {
     type: String,
     required: [true, 'Это обязательное поле'],
+    validate: {
+      validator(link) {
+        return validator.isURL(link);
+      },
+      message: 'Ссылка не валидна',
+    },
   },
   image: {
     type: String,
     required: [true, 'Это обязательное поле'],
+    validate: {
+      validator(link) {
+        return validator.isURL(link);
+      },
+      message: 'Ссылка не валидна',
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
