@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const { errors } = require('celebrate');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 const apiSignUpRouter = require('./routes/apiSignUpRouter');
 const apiSignInRouter = require('./routes/apiSignInRouter');
@@ -38,6 +39,7 @@ app.use(() => {
   throw new DocumentNotFoundError('Запрашиваемый ресурс не найден');
 });
 
+app.use(errors());
 app.use(errorHandler);
 app.use(errorController);
 

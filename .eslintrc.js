@@ -12,6 +12,17 @@ module.exports = {
   rules: {
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'object-curly-newline': 'off',
+
+    'comma-dangle': [
+      2,
+      {
+        arrays: 'always-multiline',
+        objects: 'always-multiline',
+        imports: 'always-multiline',
+        exports: 'always-multiline',
+        functions: 'ignore',
+      },
+    ],
   },
   parser: 'babel-eslint',
 };
