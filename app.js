@@ -10,6 +10,7 @@ const apiSignUpRouter = require('./routes/apiSignUpRouter');
 const apiSignInRouter = require('./routes/apiSignInRouter');
 const apiUsersRouter = require('./routes/apiUsersRouter');
 const apiArticlesRouter = require('./routes/apiArticlesRouter');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
 const errorController = require('./middlewares/errorController');
 const { DocumentNotFoundError } = require('./errors/DocumentNotFoundError');
@@ -26,6 +27,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(requestLogger);
 
 app.use('/', apiSignUpRouter);
 app.use('/', apiSignInRouter);
@@ -35,6 +37,7 @@ app.use(() => {
   throw new DocumentNotFoundError('Запрашиваемый ресурс не найден');
 });
 
+app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 app.use(errorController);
