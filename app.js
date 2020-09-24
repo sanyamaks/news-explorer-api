@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const helmet = require('helmet');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 const auth = require('./middlewares/auth');
 const apiSignUpRouter = require('./routes/apiSignUpRouter');
@@ -27,6 +28,8 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(helmet());
+
 app.use(requestLogger);
 
 app.use('/', apiSignUpRouter);
