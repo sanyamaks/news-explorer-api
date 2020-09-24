@@ -35,7 +35,7 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(
   cors({
-    origin: 'http://aleksmaksimovnews.tk/',
+    origin: 'http://aleksmaksimovnews.tk',
     credentials: true,
     method: ['GET', 'PUT', 'POST', 'OPTIONS'],
   })
