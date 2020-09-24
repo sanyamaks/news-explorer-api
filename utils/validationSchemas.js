@@ -16,6 +16,12 @@ module.exports.signinSchema = {
   }),
 };
 
+module.exports.authSchema = {
+  cookies: Joi.object().keys({
+    authorization: Joi.string().required(),
+  }),
+};
+
 module.exports.createArticleSchema = {
   body: Joi.object().keys({
     keyword: Joi.string().required(),
