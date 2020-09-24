@@ -1,15 +1,15 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const UserModel = require('../models/user');
 const { UnauthorizedError } = require('../errors/UnauthorizedError');
 
 module.exports.signin = (req, res, next) => {
   const { email, password } = req.body;
-  UserModel.findOne({ email }).select('+password')
+  UserModel.findOne({ email })
+    .select('+password')
     .then((potencialUser) => {
       if (!potencialUser) {
-        return Promise.reject(
-          new UnauthorizedError('Неверная почта или пароль')
-        );
+        throw new UnauthorizedError('Неверная почта или пароль');
       }
       return bcrypt.compare(password, potencialUser.password).then((match) => {
         if (!match) {
@@ -18,6 +18,14 @@ module.exports.signin = (req, res, next) => {
         return potencialUser;
       });
     })
-    .then((user) => res.send({ data: user }))
+    .then((user) => {
+      const token = jwt.sign({ _id: user._id }, 'key', { expiresIn: '7d' });
+      res.clearCookie('token');
+      res.cookie('authorization', `Bearer ${token}`, {
+        maxAge: 60 * 60 * 24 * 7,
+        httpOnly: true,
+      });
+      res.send({ message: 'Вы успешно авторизованы' });
+    })
     .catch(next);
 };

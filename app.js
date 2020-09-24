@@ -1,9 +1,11 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
+const auth = require('./middlewares/auth');
 const apiSignUpRouter = require('./routes/apiSignUpRouter');
 const apiSignInRouter = require('./routes/apiSignInRouter');
 const apiUsersRouter = require('./routes/apiUsersRouter');
@@ -22,19 +24,13 @@ mongoose.connect('mongodb://localhost:27017/newsdb', {
 
 const app = express();
 
-app.use((req, res, next) => {
-  req.users = {
-    _id: '5f6babb4f87eac22b07331ba',
-  };
-  next();
-});
-
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use('/', apiSignUpRouter);
 app.use('/', apiSignInRouter);
-app.use('/', apiUsersRouter);
-app.use('/', apiArticlesRouter);
+app.use('/', auth, apiUsersRouter);
+app.use('/', auth, apiArticlesRouter);
 app.use(() => {
   throw new DocumentNotFoundError('Запрашиваемый ресурс не найден');
 });
