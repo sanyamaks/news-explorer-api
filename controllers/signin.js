@@ -22,7 +22,7 @@ module.exports.signin = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, 'key', { expiresIn: '7d' });
       res.clearCookie('token');
       res.cookie('authorization', `Bearer ${token}`, {
-        maxAge: 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
       });
       res.send({ message: 'Вы успешно авторизованы' });
