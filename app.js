@@ -35,7 +35,7 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(
   cors({
-    origin: 'http://aleksmaksimovnews.tk',
+    origin: 'https://aleksmaksimovnews.tk',
     credentials: true,
     method: ['GET', 'PUT', 'POST', 'OPTIONS'],
   })
@@ -45,8 +45,8 @@ app.use(requestLogger);
 
 app.use('/', apiSignUpRouter);
 app.use('/', apiSignInRouter);
-app.use('/', celebrate(authSchema), auth, apiUsersRouter);
-app.use('/', celebrate(authSchema), auth, apiArticlesRouter);
+app.use('/', auth, apiUsersRouter);
+app.use('/', auth, apiArticlesRouter);
 app.use(() => {
   throw new DocumentNotFoundError('Запрашиваемый ресурс не найден');
 });
