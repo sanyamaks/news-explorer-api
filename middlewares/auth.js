@@ -18,8 +18,8 @@ module.exports = (req, res, next) => {
       token,
       NODE_ENV === 'production' ? JWT_SECRET : 'secret_key'
     );
-  } catch (err) {
-    throw new UnauthorizedError(err);
+  } catch {
+    throw new UnauthorizedError('Необходима авторизация');
   }
   req.users = payload;
   return next();
