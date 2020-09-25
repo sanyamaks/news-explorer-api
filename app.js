@@ -6,10 +6,8 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
 const cors = require('cors');
-const { celebrate } = require('celebrate');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 const auth = require('./middlewares/auth');
-const { authSchema } = require('./utils/validationSchemas');
 const apiSignUpRouter = require('./routes/apiSignUpRouter');
 const apiSignInRouter = require('./routes/apiSignInRouter');
 const apiUsersRouter = require('./routes/apiUsersRouter');
@@ -19,9 +17,9 @@ const errorHandler = require('./middlewares/errorHandler');
 const errorController = require('./middlewares/errorController');
 const { DocumentNotFoundError } = require('./errors/DocumentNotFoundError');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, MONGODB_URL, ALLOWED_ORIGIN } = process.env;
 
-mongoose.connect('mongodb://localhost:27017/newsdb', {
+mongoose.connect(MONGODB_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -35,7 +33,7 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(
   cors({
-    origin: 'https://aleksmaksimovnews.tk',
+    origin: ALLOWED_ORIGIN.split(','),
     credentials: true,
     method: ['GET', 'PUT', 'POST', 'OPTIONS'],
   })
