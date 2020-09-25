@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 const auth = require('./middlewares/auth');
 const apiSignUpRouter = require('./routes/apiSignUpRouter');
@@ -25,8 +26,14 @@ mongoose.connect(MONGODB_URL, {
   useFindAndModify: false,
 });
 
-const app = express();
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: 'Слишком много запросов с этого IP. Пожалуйста, повторите позже.',
+});
 
+const app = express();
+app.use(limiter);
 app.use(cookieParser());
 
 app.use(bodyParser.json());

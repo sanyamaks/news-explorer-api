@@ -33,7 +33,7 @@ module.exports.signin = (req, res, next) => {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
       });
-      res.send({ message: 'Вы успешно авторизованы' });
+      res.send({ token });
     })
     .catch(next);
 };
