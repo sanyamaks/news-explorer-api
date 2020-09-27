@@ -1,11 +1,13 @@
 const ArticleModel = require('../models/article');
+const { ForbiddenError } = require('../errors/ForbiddenError');
 
 module.exports.getArticles = (req, res, next) => {
   ArticleModel.find({})
     .populate('owner')
     .then((articles) => {
       res.send({ data: articles });
-    }).catch(next);
+    })
+    .catch(next);
 };
 
 module.exports.createArticle = (req, res, next) => {
@@ -19,16 +21,27 @@ module.exports.createArticle = (req, res, next) => {
     link,
     image,
     owner: req.users._id,
-  }).then((newArticle) => {
-    res.send({ data: newArticle });
-  }).catch(next);
+  })
+    .then((newArticle) => {
+      res.send({ data: newArticle });
+    })
+    .catch(next);
 };
 
 module.exports.removeArticle = (req, res, next) => {
   const { articleId } = req.params;
-  ArticleModel.findByIdAndRemove(articleId)
+  ArticleModel.findById(articleId)
+    .populate(['owner'])
     .orFail()
-    .then((deletedCard) => {
-      res.send({ data: deletedCard });
-    }).catch(next);
+    .then((article) => {
+      if (article.owner._id.toString() !== req.users._id) {
+        throw new ForbiddenError('Карточку может удалить только её создатель');
+      }
+      return ArticleModel.findByIdAndRemove(articleId)
+        .orFail()
+        .then((deletedArticle) => {
+          res.send({ data: deletedArticle });
+        });
+    })
+    .catch(next);
 };
