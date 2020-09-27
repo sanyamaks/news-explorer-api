@@ -5,7 +5,7 @@ const { BadRequestError } = require('../errors/BadRequestError');
 module.exports.signup = (req, res, next) => {
   const { email, password, name } = req.body;
   if (!password || !password.trim()) {
-    throw new BadRequestError('Пароль не корректен');
+    throw new BadRequestError('password: Это поле должно быть обязательно заполнено');
   }
   bcrypt.hash(password, 10).then((hash) => {
     UserModel.create({ email, password: hash, name })

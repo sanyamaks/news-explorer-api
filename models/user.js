@@ -7,25 +7,25 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
   email: {
     type: String,
-    required: [true, 'Это обязательное поле'],
+    required: [true, 'email: Это обязательное поле'],
     validate: {
       validator(link) {
         return validator.isEmail(link);
       },
-      message: 'Email не валидн',
+      message: 'email: не является валидным',
     },
     unique: true,
   },
   password: {
     type: String,
-    required: [true, 'Это обязательное поле'],
+    required: [true, 'password: Это обязательное поле'],
     select: false,
   },
   name: {
     type: String,
-    minlength: [2, 'Должно быть от 2 до 30 символов'],
-    maxlength: [30, 'Должно быть от 2 до 30 символов'],
-    required: [true, 'Это обязательное поле'],
+    minlength: [2, 'name: Должно быть от 2 до 30 символов'],
+    maxlength: [30, 'name: Должно быть от 2 до 30 символов'],
+    required: [true, 'name: Это обязательное поле'],
   },
 });
 

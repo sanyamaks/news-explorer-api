@@ -1,5 +1,6 @@
 const ArticleModel = require('../models/article');
 const { ForbiddenError } = require('../errors/ForbiddenError');
+const { DocumentNotFoundError } = require('../errors/DocumentNotFoundError');
 
 module.exports.getArticles = (req, res, next) => {
   ArticleModel.find({})
@@ -32,10 +33,14 @@ module.exports.removeArticle = (req, res, next) => {
   const { articleId } = req.params;
   ArticleModel.findById(articleId)
     .populate(['owner'])
-    .orFail()
+    .orFail(() => {
+      throw new DocumentNotFoundError('Удаляемая карточка не найдена');
+    })
     .then((article) => {
       if (article.owner._id.toString() !== req.users._id) {
-        throw new ForbiddenError('Карточку может удалить только её создатель');
+        throw new ForbiddenError(
+          'Статью может удалить только пользователь, который её сохранил'
+        );
       }
       return ArticleModel.findByIdAndRemove(articleId)
         .orFail()

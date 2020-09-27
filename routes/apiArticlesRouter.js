@@ -8,7 +8,7 @@ const {
 const {
   createArticleSchema,
   removeArticleSchema,
-} = require('../utils/validationSchemas');
+} = require('../middlewares/validationSchemas');
 
 apiArticlesRouter.get('/articles', getArticles);
 apiArticlesRouter.post(

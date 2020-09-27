@@ -1,11 +1,10 @@
 const validator = require('validator');
-const { BadRequestError } = require('../errors/BadRequestError');
 
 const { isURL } = validator;
 
-module.exports = (link) => {
+module.exports = (link, helpers) => {
   if (!isURL(link)) {
-    throw new BadRequestError('Не верный формат ссылки');
+    return helpers.message(`${helpers.state.path}: не является валидным`);
   }
 
   return link;

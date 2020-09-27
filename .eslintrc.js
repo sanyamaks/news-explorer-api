@@ -12,7 +12,7 @@ module.exports = {
   rules: {
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'object-curly-newline': 'off',
-
+    'newline-per-chained-call': 'off',
     'comma-dangle': [
       2,
       {

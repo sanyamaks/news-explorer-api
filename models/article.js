@@ -6,42 +6,42 @@ const { Schema } = mongoose;
 const articleSchema = new Schema({
   keyword: {
     type: String,
-    required: [true, 'Это обязательное поле'],
+    required: [true, 'keyword: Это обязательное поле'],
   },
   title: {
     type: String,
-    required: [true, 'Это обязательное поле'],
+    required: [true, 'title: Это обязательное поле'],
   },
   text: {
     type: String,
-    required: [true, 'Это обязательное поле'],
+    required: [true, 'text: Это обязательное поле'],
   },
   date: {
     type: String,
-    required: [true, 'Это обязательное поле'],
+    required: [true, 'date: Это обязательное поле'],
   },
   source: {
     type: String,
-    required: [true, 'Это обязательное поле'],
+    required: [true, 'source: Это обязательное поле'],
   },
   link: {
     type: String,
-    required: [true, 'Это обязательное поле'],
+    required: [true, 'link: Это обязательное поле'],
     validate: {
       validator(link) {
         return validator.isURL(link);
       },
-      message: 'Ссылка не валидна',
+      message: 'link: не является валидной',
     },
   },
   image: {
     type: String,
-    required: [true, 'Это обязательное поле'],
+    required: [true, 'image: Это обязательное поле'],
     validate: {
       validator(link) {
         return validator.isURL(link);
       },
-      message: 'Ссылка не валидна',
+      message: 'image: не является валидной',
     },
   },
   owner: {
