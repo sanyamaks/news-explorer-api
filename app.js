@@ -18,7 +18,11 @@ const errorHandler = require('./middlewares/errorHandler');
 const errorController = require('./middlewares/errorController');
 const { DocumentNotFoundError } = require('./errors/DocumentNotFoundError');
 
-const { PORT = 3000, MONGODB_URL, ALLOWED_ORIGIN } = process.env;
+const {
+  PORT = 3000,
+  MONGODB_URL = 'mongodb://localhost:27017/newsdb',
+  ALLOWED_ORIGIN = '*,http://localhost:8080,http://127.0.0.1:8080',
+} = process.env;
 
 mongoose.connect(MONGODB_URL, {
   useNewUrlParser: true,
