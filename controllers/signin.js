@@ -28,11 +28,11 @@ module.exports.signin = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'secret_key',
         { expiresIn: '7d' }
       );
-      res.clearCookie('authorization');
-      res.cookie('authorization', `Bearer ${token}`, {
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-        httpOnly: true,
-      });
+      // res.clearCookie('authorization');
+      // res.cookie('authorization', `Bearer ${token}`, {
+      //   maxAge: 1000 * 60 * 60 * 24 * 7,
+      //   httpOnly: true,
+      // });
       res.send({ token });
     })
     .catch(next);
